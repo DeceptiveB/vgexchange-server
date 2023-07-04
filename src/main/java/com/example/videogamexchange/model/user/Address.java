@@ -1,4 +1,4 @@
-package com.example.videogamexchange.models.user;
+package com.example.videogamexchange.model.user;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

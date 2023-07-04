@@ -1,7 +1,7 @@
-package com.example.videogamexchange.models.user;
+package com.example.videogamexchange.model.user;
 
-import com.example.videogamexchange.models.Comment;
-import com.example.videogamexchange.models.Post;
+import com.example.videogamexchange.model.Comment;
+import com.example.videogamexchange.model.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
