@@ -1,8 +1,11 @@
 package com.example.videogamexchange.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
+import java.util.List;
 
 @Entity
 @Table(
@@ -23,6 +26,14 @@ public class Developer {
     @NotBlank
     @Size(max = 50)
     private String name;
+
+    @JsonIgnore
+    @OneToMany(
+            mappedBy = "developer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    List<Videogame> games;
 
     public Developer() {
     }

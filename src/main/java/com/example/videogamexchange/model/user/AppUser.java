@@ -46,6 +46,10 @@ public class AppUser {
     @Size(min=10, max = 100, message = "Password must be at least 8 characters")
     private String password;
 
+    @NotBlank
+    @Size(min=9)
+    private String phone;
+
     @JsonIgnore
     @OneToMany(
             mappedBy = "user",
@@ -62,8 +66,8 @@ public class AppUser {
     )
     private List<Comment> comments;
 
-    @OneToOne
-    @JoinColumn(name="address_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="address_id", referencedColumnName = "id")
     private Address address;
 
     public AppUser() {
@@ -91,6 +95,14 @@ public class AppUser {
         this.email = email;
         this.isEnabled = isEnabled;
         this.password = password;
+    }
+
+    public AppUser(String username, String name, String email, String password, String phone) {
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
     }
 
     public Integer getId() {

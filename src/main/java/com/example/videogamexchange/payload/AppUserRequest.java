@@ -1,4 +1,4 @@
 package com.example.videogamexchange.payload;
 
-public class AppUserRequest {
+public record AppUserRequest(String name, String username, String email, String password) {
 }

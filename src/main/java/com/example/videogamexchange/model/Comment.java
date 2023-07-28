@@ -1,9 +1,9 @@
 package com.example.videogamexchange.model;
 
+import com.example.videogamexchange.model.user.AppUser;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import org.apache.catalina.User;
 
 @Entity
 @Table(name = "comment")
@@ -29,19 +29,22 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private AppUser user;
+
+    @Column(columnDefinition = "boolean default true")
+    private Boolean isEnabled = true;
 
     public Comment() {
     }
 
-    public Comment(Integer id, String body, Post post, User user) {
+    public Comment(Integer id, String body, Post post, AppUser user) {
         this.id = id;
         this.body = body;
         this.post = post;
         this.user = user;
     }
 
-    public Comment(String body, Post post, User user) {
+    public Comment(String body, Post post, AppUser user) {
         this.body = body;
         this.post = post;
         this.user = user;
@@ -71,11 +74,11 @@ public class Comment {
         this.post = post;
     }
 
-    public User getUser() {
+    public AppUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(AppUser user) {
         this.user = user;
     }
 }

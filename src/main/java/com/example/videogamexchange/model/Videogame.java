@@ -2,7 +2,9 @@ package com.example.videogamexchange.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,23 +29,24 @@ public class Videogame {
     @NotBlank
     private String name;
 
+
     @NotBlank
     @Size(max = 80)
     private String synopsis;
 
-    @NotBlank
-    @Size(max = 30)
-    private String developer;
 
-    @NotBlank
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "developer_id")
+    private Developer developer;
+
+    @NotNull
     @Column(
             name = "release_date"
     )
     private LocalDate releaseDate;
 
     @ManyToMany(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.PERSIST
+            fetch = FetchType.EAGER
     )
     @JoinTable(
             name = "videogame_genre",
@@ -61,7 +64,7 @@ public class Videogame {
     public Videogame() {
     }
 
-    public Videogame(Integer id, String name, String synopsis, String developer, LocalDate releaseDate) {
+    public Videogame(Integer id, String name, String synopsis, Developer developer, LocalDate releaseDate) {
         this.id = id;
         this.name = name;
         this.synopsis = synopsis;
@@ -69,12 +72,18 @@ public class Videogame {
         this.developer = developer;
     }
 
-    public Videogame(String name, String synopsis, LocalDate releaseDate ,String developer, List<Genre> genres) {
+    public Videogame(String name, String synopsis, LocalDate releaseDate ,Developer developer, List<Genre> genres) {
         this.name = name;
         this.synopsis = synopsis;
         this.developer = developer;
         this.releaseDate = releaseDate;
         this.genres = genres;
+    }
+
+    public Videogame(String name, String synopsis, LocalDate releaseDate) {
+        this.name = name;
+        this.synopsis = synopsis;
+        this.releaseDate = releaseDate;
     }
 
     public Integer getId() {
@@ -109,11 +118,11 @@ public class Videogame {
         this.releaseDate = releaseDate;
     }
 
-    public String getDeveloper() {
+    public Developer getDeveloper() {
         return developer;
     }
 
-    public void setDeveloper(String developer) {
+    public void setDeveloper(Developer developer) {
         this.developer = developer;
     }
 

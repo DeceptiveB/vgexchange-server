@@ -13,4 +13,6 @@ public interface PostRepo extends JpaRepository<Post, Integer> {
     Page<Post> findByVideogame(Integer videogameId, Pageable pageable);
 
     Page<Post> findByUser(Integer userId, Pageable pageable);
+
+    Long countByUserId(Integer userId);
 }
