@@ -27,7 +27,7 @@ public class Developer {
     @Size(max = 50)
     private String name;
 
-    @JsonIgnore
+
     @OneToMany(
             mappedBy = "developer",
             cascade = CascadeType.ALL,

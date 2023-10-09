@@ -30,6 +30,8 @@ public class Genre {
     @ManyToMany(mappedBy = "genres")
     private List<Videogame> videogames;
 
+    public Genre(){}
+
     public Genre(String name) {
         this.name = name;
     }

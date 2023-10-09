@@ -1,5 +1,6 @@
 package com.example.videogamexchange.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -32,22 +33,19 @@ public class Videogame {
 
     @NotBlank
     @Size(max = 80)
-    private String synopsis;
+    private String argument;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "developer_id")
     private Developer developer;
 
-    @NotNull
+
     @Column(
             name = "release_date"
     )
     private LocalDate releaseDate;
 
-    @ManyToMany(
-            fetch = FetchType.EAGER
-    )
+    @ManyToMany
     @JoinTable(
             name = "videogame_genre",
             joinColumns = @JoinColumn(name = "videogame_id"),
@@ -56,33 +54,32 @@ public class Videogame {
     private List<Genre> genres;
 
     @OneToMany(
-            mappedBy = "videogame",
-            fetch = FetchType.LAZY
+            mappedBy = "videogame"
     )
     private List<Post> posts;
 
     public Videogame() {
     }
 
-    public Videogame(Integer id, String name, String synopsis, Developer developer, LocalDate releaseDate) {
+    public Videogame(Integer id, String name, String argument, Developer developer, LocalDate releaseDate) {
         this.id = id;
         this.name = name;
-        this.synopsis = synopsis;
+        this.argument = argument;
         this.releaseDate = releaseDate;
         this.developer = developer;
     }
 
-    public Videogame(String name, String synopsis, LocalDate releaseDate ,Developer developer, List<Genre> genres) {
+    public Videogame(String name, String argument, LocalDate releaseDate ,Developer developer, List<Genre> genres) {
         this.name = name;
-        this.synopsis = synopsis;
+        this.argument = argument;
         this.developer = developer;
         this.releaseDate = releaseDate;
         this.genres = genres;
     }
 
-    public Videogame(String name, String synopsis, LocalDate releaseDate) {
+    public Videogame(String name, String argument, LocalDate releaseDate) {
         this.name = name;
-        this.synopsis = synopsis;
+        this.argument = argument;
         this.releaseDate = releaseDate;
     }
 
@@ -102,12 +99,12 @@ public class Videogame {
         this.name = name;
     }
 
-    public String getSynopsis() {
-        return synopsis;
+    public String getArgument() {
+        return argument;
     }
 
-    public void setSynopsis(String synopsis) {
-        this.synopsis = synopsis;
+    public void setArgument(String argument) {
+        this.argument = argument;
     }
 
     public LocalDate getReleaseDate() {

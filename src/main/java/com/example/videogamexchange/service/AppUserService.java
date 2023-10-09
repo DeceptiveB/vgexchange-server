@@ -44,7 +44,8 @@ public class AppUserService {
 
         AppUserResponse userResponse = new AppUserResponse();
 
-        URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/{userid}").buildAndExpand(appUser.getId()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/{userid}").
+                buildAndExpand(appUser.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new ApiResponse(Boolean.TRUE, "User registered successfully"));
     }
@@ -55,6 +56,12 @@ public class AppUserService {
 
         Long postCount = postRepo.countByUserId(appUser.getId());
 
-        return new AppUserResponse(appUser.getId(), appUser.getName(), appUser.getEmail(), appUser.getUsername(), postCount, appUser.getEnabled() );
+        return new AppUserResponse(
+                appUser.getId(),
+                appUser.getName(),
+                appUser.getEmail(),
+                appUser.getUsername(),
+                postCount,
+                appUser.getEnabled() );
     }
 }

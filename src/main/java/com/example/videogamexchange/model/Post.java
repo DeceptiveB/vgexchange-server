@@ -26,11 +26,11 @@ public class Post {
     @Size(max = 80)
     private String body;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private AppUser user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "videogame_id")
     private Videogame videogame;
 
