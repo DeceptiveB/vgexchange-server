@@ -3,12 +3,16 @@ package com.example.videogamexchange.service;
 import com.example.videogamexchange.exception.ResourceNotFoundException;
 import com.example.videogamexchange.mapper.Post.ListPostMapper;
 import com.example.videogamexchange.mapper.Post.PostMapper;
+import com.example.videogamexchange.model.Post;
 import com.example.videogamexchange.payload.Post.ListPostResponse;
 import com.example.videogamexchange.payload.Post.PostResponse;
 import com.example.videogamexchange.repository.PostRepo;
+import com.example.videogamexchange.specification.PostSpecification;
+import com.example.videogamexchange.specification.VideogameSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,12 +31,24 @@ public class PostService {
     private PostRepo postRepo;
 
     public List<ListPostResponse> getAllPosts(
+            List<Integer> videogames,
             int page,
             int nElements
     ){
+        Specification<Post> spec = Specification.where(PostSpecification.hasVideogame(videogames.get(0)));
+        //if (videogames != null){
+        //    for (Integer videogame:
+        //            videogames
+        //    ) {
+        //        System.out.println(videogame);
+        //        spec.or(PostSpecification.hasVideogame(videogame));
+        //        System.out.println("blue");
+        //    }
+        //}
+        System.out.println("gay");
         Pageable pageable = PageRequest.of(page, nElements);
         return postRepo
-                .findAll(pageable)
+                .findAll(spec, pageable)
                 .stream()
                 .map(listPostMapper)
                 .collect(Collectors.toList());

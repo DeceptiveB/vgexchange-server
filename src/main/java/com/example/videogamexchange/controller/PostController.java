@@ -1,5 +1,6 @@
 package com.example.videogamexchange.controller;
 
+import com.example.videogamexchange.model.Post;
 import com.example.videogamexchange.payload.Post.ListPostResponse;
 import com.example.videogamexchange.payload.Post.PostResponse;
 import com.example.videogamexchange.service.PostService;
@@ -17,12 +18,22 @@ public class PostController {
     private PostService postService;
 
 
-    @GetMapping
+    @GetMapping("/post")
     public ResponseEntity<List<ListPostResponse>> getAllPosts(
-            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-            @RequestParam(value = "quantity", required = false, defaultValue = "5") Integer nElements
+            @RequestParam(
+                    value = "videogames",
+                    required = false) List<Integer> videogames,
+            @RequestParam(
+                    value = "page",
+                    required = false,
+                    defaultValue = "0") Integer page,
+            @RequestParam(value = "quantity",
+                    required = false,
+                    defaultValue = "5") Integer nElements
     ){
-        return ResponseEntity.ok().body(postService.getAllPosts(page, nElements));
+        System.out.println(videogames);
+        List<ListPostResponse> posts = postService.getAllPosts(videogames, page, nElements);
+        return ResponseEntity.ok().body(posts);
     }
 
     @GetMapping("/user/{userId}")

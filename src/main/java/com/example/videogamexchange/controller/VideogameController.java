@@ -1,9 +1,11 @@
 package com.example.videogamexchange.controller;
 
 
+import com.example.videogamexchange.payload.Videogame.ListVideogameResponse;
 import com.example.videogamexchange.payload.Videogame.VideogameResponse;
 import com.example.videogamexchange.service.VideogameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,22 +21,49 @@ public class VideogameController {
     @Autowired
     private VideogameService videogameService;
 
-    //@GetMapping()
-    @GetMapping(value = {"/videogame", "/videogame/"})
-    public List<VideogameResponse> getVideosgame(
-                                @RequestParam List<Integer> genre,
-                                @RequestParam(value = "page", required = false) Integer page,
-                                @RequestParam(value = "n", required = false) Integer nElements){
-        if (nElements == null ){
+    //@GetMapping()Z
+    @GetMapping("/videogame")
+    public ResponseEntity<List<ListVideogameResponse>> getVideosgame(
+                                @RequestParam(
+                                        value = "developer",
+                                        required = false) String developer,
+                                @RequestParam(
+                                        value = "genres",
+                                        required = false) List<Integer> genres,
+                                @RequestParam(value = "page",
+                                        required = false,
+                                        defaultValue = "0") Integer page,
+                                @RequestParam(value = "size",
+                                        required = false,
+                                        defaultValue = "5") Integer size){
+        /*if (nElements == null ){
             nElements = 5;
-        }
+        }*/
+        System.out.println(genres);
 
-        List<VideogameResponse> videogames = videogameService
-                .getVideogamesByGenres(genre,
+        System.out.println(page);
+        System.out.println(size);
+
+        List<ListVideogameResponse> videogames = videogameService
+                .getVideogames(
                         page,
-                        nElements);
-        videogames.forEach((element) -> System.out.println(element.genres()));
-        //Videogame vg = videogameService.getVideogameByName("Red Dead Redemption");
-        return videogames;
+                        size,
+                        genres,
+                        developer);
+        return ResponseEntity.ok().body(videogames);
     }
+
+    //@GetMapping("/videogame")
+    /*public ResponseEntity<List<ListVideogameResponse>>  getVideogameByGenre(
+            @RequestParam(
+                    value = "genre",
+                    required = false) List<Integer> genres,
+            @RequestParam(value = "page",
+                    required = false, defaultValue = "0") Integer page,
+            @RequestParam(value = "size",
+                    required = false,
+                    defaultValue = "5") Integer size
+    ){
+        return ResponseEntity.ok().body(videogameService.getVideogamesByGenres(genres, page, size));
+    }*/
 }
