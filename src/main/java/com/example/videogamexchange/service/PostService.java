@@ -9,6 +9,10 @@ import com.example.videogamexchange.payload.Post.PostResponse;
 import com.example.videogamexchange.repository.PostRepo;
 import com.example.videogamexchange.specification.PostSpecification;
 import com.example.videogamexchange.specification.VideogameSpecification;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,16 +39,10 @@ public class PostService {
             int page,
             int nElements
     ){
-        Specification<Post> spec = Specification.where(PostSpecification.hasVideogame(videogames.get(0)));
-        //if (videogames != null){
-        //    for (Integer videogame:
-        //            videogames
-        //    ) {
-        //        System.out.println(videogame);
-        //        spec.or(PostSpecification.hasVideogame(videogame));
-        //        System.out.println("blue");
-        //    }
-        //}
+        Specification<Post> spec = Specification.where(null);
+        if (videogames != null){
+            spec = Specification.where(PostSpecification.hasVideogame(videogames));
+        }
         System.out.println("gay");
         Pageable pageable = PageRequest.of(page, nElements);
         return postRepo
