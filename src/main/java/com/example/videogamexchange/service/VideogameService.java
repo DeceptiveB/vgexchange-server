@@ -36,11 +36,7 @@ public class VideogameService {
         Specification<Videogame> spec = Specification.where(null);
         System.out.println(genres);
         if(genres != null){
-            for (Integer genre:
-                 genres) {
-                System.out.println(genre);
-                spec = spec.or(VideogameSpecification.isGenre(genre));
-            }
+            spec = spec.and(VideogameSpecification.isGenre(genres));
         }
         if (developer != null){
             spec = spec.and(VideogameSpecification.hasDeveloper(developer));

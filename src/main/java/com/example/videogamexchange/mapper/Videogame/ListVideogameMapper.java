@@ -15,7 +15,11 @@ public class ListVideogameMapper  implements Function<Videogame, ListVideogameRe
     public ListVideogameResponse apply(Videogame videogame) {
         return new ListVideogameResponse(
                 videogame.getName(),
-                videogame.getDeveloper().getName()
+                videogame.getDeveloper().getName(),
+                videogame.getGenres()
+                        .stream()
+                        .map(Genre::getName)
+                        .collect(Collectors.toList())
         );
     }
 }

@@ -10,9 +10,11 @@ import java.util.List;
 
 public class VideogameSpecification {
 
-    public static Specification<Videogame> isGenre(Integer genre) {
-        return (root, query, criteriaBuilder ) ->
-            root.get("genres").get("id").in(genre);
+    public static Specification<Videogame> isGenre(List<Integer> genre) {
+        return (root, query, criteriaBuilder ) -> {
+            query.distinct(true);
+            return root.get("genres").get("id").in(genre);
+        };
     }
 
     public static Specification<Videogame> hasDeveloper(String developer) {

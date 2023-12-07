@@ -4,6 +4,7 @@ public record ListPostResponse (
         Integer id,
         String body,
         String username,
-        String videogame
+        String videogame,
+        Integer videogame_id
 ){
 }

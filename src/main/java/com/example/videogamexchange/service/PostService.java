@@ -41,9 +41,8 @@ public class PostService {
     ){
         Specification<Post> spec = Specification.where(null);
         if (videogames != null){
-            spec = Specification.where(PostSpecification.hasVideogame(videogames));
+            spec = spec.and(PostSpecification.hasVideogame(videogames));
         }
-        System.out.println("gay");
         Pageable pageable = PageRequest.of(page, nElements);
         return postRepo
                 .findAll(spec, pageable)
@@ -65,7 +64,7 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
-    /*public PostResponse getPostsByCategory(List<Integer> genres){
+    /*public PostResponse getPostsByCategory(<List<Integer> genres){
 
     }*/
 

@@ -17,7 +17,8 @@ public class ListPostMapper implements Function<Post, ListPostResponse> {
                 post.getId(),
                 post.getBody(),
                 post.getUser().getName(),
-                post.getVideogame().getName()
+                post.getVideogame().getName(),
+                post.getVideogame().getId()
         );
     }
 }
