@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record VideogameRequest (
-        Integer id,
         String name,
 
         String developer,

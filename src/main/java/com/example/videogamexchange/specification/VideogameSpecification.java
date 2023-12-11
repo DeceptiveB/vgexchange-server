@@ -1,9 +1,6 @@
 package com.example.videogamexchange.specification;
 
-import com.example.videogamexchange.model.Genre;
-import com.example.videogamexchange.model.Post;
 import com.example.videogamexchange.model.Videogame;
-import jakarta.persistence.criteria.Join;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;

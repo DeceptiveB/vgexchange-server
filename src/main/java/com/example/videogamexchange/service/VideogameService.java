@@ -1,11 +1,10 @@
 package com.example.videogamexchange.service;
 
 import com.example.videogamexchange.mapper.Videogame.ListVideogameMapper;
-import com.example.videogamexchange.mapper.Videogame.VideogameMapper;
-import com.example.videogamexchange.model.Genre;
+import com.example.videogamexchange.mapper.Videogame.VideogameResponseMapper;
 import com.example.videogamexchange.model.Videogame;
 import com.example.videogamexchange.payload.Videogame.ListVideogameResponse;
-import com.example.videogamexchange.payload.Videogame.VideogameResponse;
+import com.example.videogamexchange.payload.Videogame.VideogameRequest;
 import com.example.videogamexchange.repository.VideogameRepo;
 import com.example.videogamexchange.specification.VideogameSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ import java.util.stream.Collectors;
 public class VideogameService {
 
     @Autowired
-    private VideogameMapper videogameMapper;
+    private VideogameResponseMapper videogameMapper;
 
     @Autowired
     private ListVideogameMapper listVideogameMapper;
@@ -62,5 +61,10 @@ public class VideogameService {
 
     public Videogame getVideogameByName(String name){
         return videogameRepo.findByName(name).orElseThrow();
+    }
+
+
+    public Videogame saveVideogame(VideogameRequest videogame){
+
     }
 }

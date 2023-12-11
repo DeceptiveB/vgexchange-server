@@ -9,7 +9,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-public class VideogameMapper implements Function<Videogame, VideogameResponse> {
+public class VideogameResponseMapper implements Function<Videogame, VideogameResponse> {
     @Override
     public VideogameResponse apply(Videogame videogame) {
         return new VideogameResponse(
