@@ -14,6 +14,6 @@ public record VideogameRequest (
 
         String argument,
 
-        List<String> genres
+        List<Integer> genres
 ){
 }

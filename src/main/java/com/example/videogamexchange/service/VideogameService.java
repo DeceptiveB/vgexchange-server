@@ -1,10 +1,15 @@
 package com.example.videogamexchange.service;
 
+import com.example.videogamexchange.exception.ResourceNotFoundException;
 import com.example.videogamexchange.mapper.Videogame.ListVideogameMapper;
 import com.example.videogamexchange.mapper.Videogame.VideogameResponseMapper;
+import com.example.videogamexchange.model.Developer;
+import com.example.videogamexchange.model.Genre;
 import com.example.videogamexchange.model.Videogame;
 import com.example.videogamexchange.payload.Videogame.ListVideogameResponse;
 import com.example.videogamexchange.payload.Videogame.VideogameRequest;
+import com.example.videogamexchange.repository.DeveloperRepo;
+import com.example.videogamexchange.repository.GenreRepo;
 import com.example.videogamexchange.repository.VideogameRepo;
 import com.example.videogamexchange.specification.VideogameSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +32,12 @@ public class VideogameService {
     private ListVideogameMapper listVideogameMapper;
     @Autowired
     private VideogameRepo videogameRepo;
+
+    @Autowired
+    private GenreRepo genreRepo;
+
+    @Autowired
+    private DeveloperRepo developerRepo;
 
 
     public List<ListVideogameResponse> getVideogames(int page,
@@ -64,7 +76,30 @@ public class VideogameService {
     }
 
 
-    public Videogame saveVideogame(VideogameRequest videogame){
+    public Videogame saveVideogame(VideogameRequest videogameRequest) {
+        List<Genre> genres = new ArrayList<>();
+        Developer dev = null;
+        if (videogameRequest.genres() != null){
 
+            for (Integer id : videogameRequest.genres()
+            ) {
+                Genre genre = genreRepo.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException("genre", "id", id));
+            }
+        }
+
+        if (videogameRequest.developer() != null){
+            dev = developerRepo.findByName(videogameRequest.developer())
+                    .orElseThrow(() -> new ResourceNotFoundException("developer", "name", videogameRequest.developer()));
+        }
+        Videogame vg = new Videogame(
+                videogameRequest.name(),
+                videogameRequest.argument(),
+                videogameRequest.releaseDate(),
+                dev,
+                genres
+        );
+
+        return vg;
     }
 }
