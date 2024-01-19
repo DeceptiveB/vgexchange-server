@@ -38,10 +38,21 @@ public class PostController {
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<ListPostResponse>> getPostsByUser(
-            @PathVariable(value="userId") Integer postId,
-            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-            @RequestParam(value = "quantity", required = false, defaultValue = "5") Integer nElements){
-        List<ListPostResponse> postResponse = postService.getPostsByUser(postId, page, nElements);
+            @PathVariable(
+                    value="userId") Integer postId,
+            @RequestParam(
+                    value = "page",
+                    required = false,
+                    defaultValue = "0") Integer page,
+            @RequestParam(
+                    value = "quantity",
+                    required = false,
+                    defaultValue = "5") Integer nElements){
+        List<ListPostResponse> postResponse = postService.
+                getPostsByUser(
+                        postId,
+                        page,
+                        nElements);
 
         return ResponseEntity.ok().body(postResponse);
     }
@@ -55,3 +66,4 @@ public class PostController {
         return ResponseEntity.ok().body(postService.getPostById(id));
     }
 }
+

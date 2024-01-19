@@ -6,10 +6,7 @@ import com.example.videogamexchange.payload.Videogame.VideogameResponse;
 import com.example.videogamexchange.service.VideogameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,8 +19,8 @@ public class VideogameController {
     private VideogameService videogameService;
 
     //@GetMapping()Z
-    @GetMapping("/videogame")
-    public ResponseEntity<List<ListVideogameResponse>> getVideosgame(
+    @GetMapping("/videogames")
+    public ResponseEntity<List<ListVideogameResponse>> getVideogamea(
                                 @RequestParam(
                                         value = "developer",
                                         required = false) String developer,
@@ -52,6 +49,19 @@ public class VideogameController {
                         developer);
         return ResponseEntity.ok().body(videogames);
     }
+
+    @GetMapping("/videogames/{vgId}")
+    public ResponseEntity<VideogameResponse> getVideosgameById(
+            @PathVariable(
+                    value = "vgId") Integer id){
+
+
+        VideogameResponse videogames = videogameService
+                .getVideogameById(
+                        id);
+        return ResponseEntity.ok().body(videogames);
+    }
+
 
     //@GetMapping("/videogame")
     /*public ResponseEntity<List<ListVideogameResponse>>  getVideogameByGenre(

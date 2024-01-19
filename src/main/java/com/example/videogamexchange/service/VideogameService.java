@@ -8,6 +8,7 @@ import com.example.videogamexchange.model.Genre;
 import com.example.videogamexchange.model.Videogame;
 import com.example.videogamexchange.payload.Videogame.ListVideogameResponse;
 import com.example.videogamexchange.payload.Videogame.VideogameRequest;
+import com.example.videogamexchange.payload.Videogame.VideogameResponse;
 import com.example.videogamexchange.repository.DeveloperRepo;
 import com.example.videogamexchange.repository.GenreRepo;
 import com.example.videogamexchange.repository.VideogameRepo;
@@ -101,5 +102,11 @@ public class VideogameService {
         );
 
         return vg;
+    }
+
+    public VideogameResponse getVideogameById(Integer id) {
+        return videogameRepo.findById(id)
+                .map(videogameMapper)
+                .orElseThrow(() -> new ResourceNotFoundException("videogame", "id", id));
     }
 }
