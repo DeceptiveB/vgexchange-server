@@ -50,7 +50,7 @@ public class VideogameController {
         return ResponseEntity.ok().body(videogames);
     }
 
-    @GetMapping("/videogames/{vgId}")
+    @GetMapping("/videogame/{vgId}")
     public ResponseEntity<VideogameResponse> getVideosgameById(
             @PathVariable(
                     value = "vgId") Integer id){
